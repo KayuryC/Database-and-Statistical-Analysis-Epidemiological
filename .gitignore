@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+.pycache/
+*.py[cod]
+.venv/
+.env
+
+# Bases brutas e derivadas ficam locais para evitar commits grandes/acidentais.
+data/raw/*.csv
+data/processed/*.csv
+!data/raw/.gitkeep
+!data/processed/.gitkeep
