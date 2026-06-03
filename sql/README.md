@@ -1,10 +1,20 @@
 # SQL
 
-Esta pasta guardará os scripts SQL do projeto.
+Scripts SQL do projeto, pensados para PostgreSQL 15+.
 
-Ordem planejada:
+## Ordem de execução
 
-1. Definir modelo relacional normalizado.
-2. Criar tabelas dimensionais e fato epidemiológico.
-3. Criar carga inicial a partir da base tratada.
-4. Adicionar consultas analíticas.
+```bash
+psql "$DATABASE_URL" -f sql/00_create_schemas.sql
+psql "$DATABASE_URL" -f sql/01_create_tables.sql
+psql "$DATABASE_URL" -f sql/02_seed_dimensions.sql
+```
+
+Depois da etapa de funções, triggers e views, a ordem completa incluirá os demais scripts numerados.
+
+## Camadas
+
+- `staging`: dados brutos preservados com as 43 colunas originais normalizadas para snake case.
+- `core`: dimensões, tabela fato tipada e controle de carga.
+- `audit`: registros de auditoria com snapshots em JSONB.
+- `analytics`: funções e views para consultas epidemiológicas e dashboard.
