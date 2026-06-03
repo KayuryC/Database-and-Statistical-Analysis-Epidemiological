@@ -8,9 +8,10 @@ Scripts SQL do projeto, pensados para PostgreSQL 15+.
 psql "$DATABASE_URL" -f sql/00_create_schemas.sql
 psql "$DATABASE_URL" -f sql/01_create_tables.sql
 psql "$DATABASE_URL" -f sql/02_seed_dimensions.sql
+psql "$DATABASE_URL" -f sql/03_transform_core_from_staging.sql
 ```
 
-Depois da etapa de funções, triggers e views, a ordem completa incluirá os demais scripts numerados.
+O script `03_transform_core_from_staging.sql` deve ser executado depois que o staging estiver carregado pelo ETL Python.
 
 ## Camadas
 

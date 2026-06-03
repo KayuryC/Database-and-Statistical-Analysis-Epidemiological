@@ -38,9 +38,32 @@ O relatório será criado em:
 docs/reports/perfil_csv_zika.md
 ```
 
+## Ambiente Python
+
+Instalar dependências:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+## Carga PostgreSQL
+
+Configurar a URL do banco local:
+
+```bash
+export DATABASE_URL="postgresql://usuario:senha@localhost:5432/zika_sinan"
+```
+
+Executar a carga completa:
+
+```bash
+python3 scripts/load_to_postgres.py --database-url "$DATABASE_URL" --csv data/raw/ZIKA_BR_2018_2026_UNIFICADO.csv --mode reload
+```
+
+O script cria schemas/tabelas/dimensões, carrega o staging, transforma os registros para `core.notificacao_zika` e marca duplicatas completas por `row_hash`.
+
 ## Próximas etapas
 
-1. Consolidar o catálogo de variáveis em `docs/variaveis.md`.
-2. Definir o modelo relacional em PostgreSQL.
-3. Criar scripts de limpeza e carga.
-4. Construir consultas epidemiológicas e análises estatísticas.
+1. Implementar funções e triggers.
+2. Construir views epidemiológicas para dashboard.
+3. Executar análises estatísticas e documentar resultados.
