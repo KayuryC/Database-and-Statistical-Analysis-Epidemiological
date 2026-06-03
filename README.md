@@ -14,6 +14,17 @@ scripts/        # automações em Python
 sql/            # scripts SQL do modelo e das análises
 ```
 
+## Entregas implementadas
+
+- Catálogo das 43 variáveis em `docs/variaveis.md`.
+- Checklist da atividade em `docs/requisitos.md`.
+- Modelagem relacional em `docs/modelagem.md`.
+- ETL PostgreSQL em `scripts/load_to_postgres.py`.
+- Funções, triggers, auditoria e validação clínica em `sql/04_functions_triggers.sql`.
+- Views para dashboard em `sql/05_dashboard_views.sql`.
+- Análise estatística em `scripts/run_statistical_analysis.py`.
+- Guia de reprodução em `docs/execucao.md`.
+
 ## Base bruta
 
 O CSV unificado deve ficar em:
@@ -62,6 +73,14 @@ python3 scripts/load_to_postgres.py --database-url "$DATABASE_URL" --csv data/ra
 
 O script cria schemas/tabelas/dimensões, carrega o staging, transforma os registros para `core.notificacao_zika` e marca duplicatas completas por `row_hash`.
 
+Depois da carga histórica, aplicar funções, triggers e views:
+
+```bash
+psql "$DATABASE_URL" -f sql/04_functions_triggers.sql
+psql "$DATABASE_URL" -f sql/05_dashboard_views.sql
+psql "$DATABASE_URL" -f sql/98_smoke_tests.sql
+```
+
 ## Análise estatística
 
 Gerar relatório estatístico:
@@ -78,6 +97,6 @@ python3 scripts/run_statistical_analysis.py --source csv
 
 ## Próximas etapas
 
-1. Executar validação com PostgreSQL local 15+.
-2. Revisar resultados estatísticos no relatório gerado.
-3. Fazer ajustes finais de documentação e checklist.
+1. Instalar PostgreSQL 15+ localmente, se ainda não estiver instalado.
+2. Executar a carga completa e o smoke test SQL.
+3. Revisar os relatórios em `docs/reports/`.

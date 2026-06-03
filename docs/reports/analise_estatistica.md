@@ -1,6 +1,6 @@
 # Análise estatística epidemiológica — Zika/SINAN
 
-Gerado em: `2026-06-03 19:24:54 UTC`
+Gerado em: `2026-06-03 19:30:00 UTC`
 Fonte usada: `CSV` — Fallback local usando data/raw/ZIKA_BR_2018_2026_UNIFICADO.csv.
 
 ## Resumo da base analisada

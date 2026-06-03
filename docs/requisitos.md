@@ -4,18 +4,18 @@ Fonte: projeto “Banco de Dados e Análise Estatística Epidemiológica — Zik
 
 ## Entregas obrigatórias
 
-| Requisito | Implementação planejada | Status |
+| Requisito | Implementação entregue | Status |
 |---|---|---|
-| Modelagem relacional normalizada | Schemas `staging`, `core`, `audit` e `analytics`; tabelas de domínio e fato tipada. | Planejado |
-| Carga ETL via Python | Script `scripts/load_to_postgres.py` com `DATABASE_URL`, modo `reload` e cópia do CSV bruto. | Planejado |
-| Função de decodificação de idade | `core.fn_decode_idade_sinan`. | Planejado |
-| Função de resumo UF/ano | `analytics.fn_resumo_epidemiologico_uf_ano`. | Planejado |
-| Inserção validada | `core.fn_inserir_notificacao_validada`. | Planejado |
-| Detecção de duplicatas | `core.fn_detectar_duplicatas`. | Planejado |
-| Triggers de auditoria | Snapshot `OLD`/`NEW` em JSONB para `INSERT`, `UPDATE` e `DELETE`. | Planejado |
-| Trigger de validação clínica | Consistência entre evolução, óbito, classificação e datas. | Planejado |
-| Views para dashboard | Série semanal, UF/ano, pirâmide etária, gestantes e KPIs. | Planejado |
-| Análise estatística | Sazonalidade, tendência por UF, previsão e K-Means municipal. | Planejado |
+| Modelagem relacional normalizada | Schemas `staging`, `core`, `audit` e `analytics`; tabelas de domínio e fato tipada. | Implementado |
+| Carga ETL via Python | `scripts/load_to_postgres.py` com `DATABASE_URL`, modo `reload`, staging e transformação para core. | Implementado |
+| Função de decodificação de idade | `core.fn_decode_idade_sinan`. | Implementado |
+| Função de resumo UF/ano | `analytics.fn_resumo_epidemiologico_uf_ano`. | Implementado |
+| Inserção validada | `core.fn_inserir_notificacao_validada` com JSONB e validação clínica estrita. | Implementado |
+| Detecção de duplicatas | `core.fn_detectar_duplicatas`. | Implementado |
+| Triggers de auditoria | `trg_notificacao_zika_audit` com snapshot `OLD`/`NEW` em JSONB. | Implementado |
+| Trigger de validação clínica | `trg_notificacao_zika_validacao_clinica`, com log e modo estrito para inserção validada. | Implementado |
+| Views para dashboard | Série semanal, UF/ano, pirâmide etária, gestantes e KPIs. | Implementado |
+| Análise estatística | Sazonalidade, tendência por UF, previsão com Prophet quando instalado e K-Means municipal. | Implementado |
 
 ## Critérios de aceite
 
@@ -28,6 +28,20 @@ Fonte: projeto “Banco de Dados e Análise Estatística Epidemiológica — Zik
 - Entregar scripts SQL executáveis em PostgreSQL 15+.
 - Entregar scripts Python com mensagens claras de dependências ausentes.
 
+## Validações já executadas
+
+- `python3 scripts/profile_csv.py`
+- `python3 scripts/load_to_postgres.py --help`
+- `python3 scripts/run_statistical_analysis.py --source csv`
+- `python3 -m py_compile` nos scripts Python do projeto, com cache local.
+
+## Validações pendentes no ambiente do usuário
+
+- Instalar PostgreSQL 15+ e `psql`.
+- Instalar dependências de `requirements.txt`, especialmente `psycopg[binary]` e `prophet`.
+- Executar ETL real no banco `zika_sinan`.
+- Executar `sql/98_smoke_tests.sql`.
+
 ## Organização de branches
 
-Cada etapa deve ser implementada em uma branch `feature-*`, validada, commitada e integrada à `main`.
+Cada etapa foi implementada em branch `feature-*`, commitada, enviada ao remoto e integrada à `main`.

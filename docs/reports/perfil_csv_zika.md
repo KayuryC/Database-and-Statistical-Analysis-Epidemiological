@@ -1,6 +1,6 @@
 # Perfil inicial da base Zika/SINAN
 
-Gerado em: `2026-06-02 19:20:06 UTC`
+Gerado em: `2026-06-03 19:29:58 UTC`
 
 ## Resumo
 
