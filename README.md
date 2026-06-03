@@ -62,8 +62,22 @@ python3 scripts/load_to_postgres.py --database-url "$DATABASE_URL" --csv data/ra
 
 O script cria schemas/tabelas/dimensões, carrega o staging, transforma os registros para `core.notificacao_zika` e marca duplicatas completas por `row_hash`.
 
+## Análise estatística
+
+Gerar relatório estatístico:
+
+```bash
+python3 scripts/run_statistical_analysis.py --database-url "$DATABASE_URL" --output docs/reports/analise_estatistica.md
+```
+
+Se o PostgreSQL ou o driver não estiverem disponíveis, o script pode usar o CSV bruto como fallback:
+
+```bash
+python3 scripts/run_statistical_analysis.py --source csv
+```
+
 ## Próximas etapas
 
-1. Implementar funções e triggers.
-2. Construir views epidemiológicas para dashboard.
-3. Executar análises estatísticas e documentar resultados.
+1. Executar validação com PostgreSQL local 15+.
+2. Revisar resultados estatísticos no relatório gerado.
+3. Fazer ajustes finais de documentação e checklist.

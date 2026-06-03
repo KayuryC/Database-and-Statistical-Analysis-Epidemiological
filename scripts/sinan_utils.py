@@ -113,3 +113,20 @@ def row_hash_from_values(values: list[str]) -> str:
 def row_hash_from_csv_row(row: Mapping[str, object]) -> str:
     values = [clean_raw_value(row.get(column)) for column in CSV_COLUMNS]
     return row_hash_from_values(values)
+
+
+def decode_idade_sinan(value: object) -> int | None:
+    clean_value = clean_raw_value(value)
+    if len(clean_value) != 4 or not clean_value.isdigit():
+        return None
+
+    unit = int(clean_value[0])
+    amount = int(clean_value[1:])
+
+    if unit in (1, 2):
+        return 0
+    if unit == 3:
+        return int(amount // 12)
+    if unit == 4:
+        return amount
+    return None
